@@ -7,15 +7,25 @@ pipeline {
         git branch: 'main', url: 'https://github.com/MiguelZod24/Ejercicios-de-automatizacion.git'
       }
     }
-    stage('Instalar dependencias') {
+    stage('Preparar entorno') {
       steps {
-        sh 'pip3 install -r requirements.txt'
-        sh 'python3 -m playwright install'
+        // Crear virtualenv, activarlo, instalar paquetes y playwright
+        sh '''
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          python3 -m playwright install
+        '''
       }
     }
     stage('Correr tests') {
       steps {
-        sh 'python3 -m pytest'
+        // Correr pytest dentro del virtualenv
+        sh '''
+          . venv/bin/activate
+          python3 -m pytest
+        '''
       }
     }
   }
