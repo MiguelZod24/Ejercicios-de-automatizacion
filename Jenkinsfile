@@ -4,7 +4,8 @@ pipeline {
   stages {
     stage('Clonar proyecto') {
       steps {
-        git url: 'https://github.com/MiguelZod24/Ejercicios-de-automatizacion'
+        git branch: 'main', url: 'https://github.com/MiguelZod24/Ejercicios-de-automatizacion.git'
+
       }
     }
     stage('Instalar dependencias') {
